@@ -4,7 +4,7 @@ import random
 from pygame.locals import *
 
 from .scene import Scene
-from .. resources import gfx, sfx
+from .. resources import gfx, sfx, music
 
 
 from pygame.sprite import DirtySprite, LayeredDirty
@@ -269,7 +269,7 @@ class Shark(DirtySprite):
 
         elif self.just_happened == 'about_to_appear':
             if debug:print(self.just_happened)
-            pygame.mixer.music.stop()
+            music(stop=True)
             sfx('shark_appear.ogg', play=1)
             sfx('zirkus.ogg', stop=1)
 
@@ -597,9 +597,15 @@ class CatUniScene(Scene):
         self.cat_fall_speed_max = 16
         self.cat_angle = 0
         self.cat_angular_vel = 0
+        self.cat_head_location = [
+            int(self.cat_location[0] + 100 * math.cos(self.cat_angle - math.pi / 2)),
+            int(self.cat_location[1] + 100 * math.sin(self.cat_angle - math.pi / 2)),
+        ]
+
         self.left_pressed = False
         self.right_pressed = False
         self.score = 0
+
 
         #timing
         self.dt_scaled = 0
