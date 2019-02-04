@@ -2,4 +2,4 @@ pygame
 pyscroll
 pytmx
 thorpy
-pymunk
+pymunk>=5.4.2
