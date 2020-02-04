@@ -8,14 +8,16 @@ matrix:
   - dist: xenial
     os: linux
     python: 3.7
-    env: TOXENV=py37,py27
+    env: TOXENV=py37
   - os: osx
     language: generic
     if: tag IS present
     env:
     - TOXENV=py27
     - GITHUB_UPLOAD=yes
-
+    addons:
+      homebrew:
+        packages: python3
 
 # only test master and tagged releases on push
 # always test things that aren't pushes (like PRs)
@@ -24,7 +26,7 @@ if: type != push OR branch = master OR branch =~ /^\d+\.\d+(\.\d+)?(-\S*)?$/
 
 install: pip install tox
 script:
-  - tox
+  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then tox; fi;
 # Deploy to github releases, and pypi.
 # https://docs.travis-ci.com/user/deployment/
 # travis osx has python3.6 installed.
